@@ -1,14 +1,8 @@
 <script>
 	// desn't work here (window issue)
 	// import zim from "zimjs"
-	// 
 	import { onMount, onDestroy } from "svelte"
-	import Counter from "./Counter.svelte"
-  import welcome from "$lib/images/svelte-welcome.webp"
-  import welcome_fallback from "$lib/images/svelte-welcome.png"
-  //   import zim from "zimjs"
 
-  //   import { Frame } from "zimjs"
   let num = 0
   let frame
   let temp
@@ -39,6 +33,13 @@
       })
       temp.center()
       frame.stage.update()
+
+	  let text="test phrase"
+	  const ajax = new Ajax()
+	  const but = new Button(200,60,"CLICK").pos(0,0).tap(()=>{
+                zog("clicking");
+                ajax.post('?/myform', text, "text", "text")
+	  })
     }
   })
 	onDestroy(() => {
@@ -46,34 +47,23 @@
   })
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
 
-		to your new<br />SvelteKit app
-	</h1>
 
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
 
-	<Counter />
+
 	{num}
-	<form>
-		<button on:click={rnd}>Refresh</button>
+	<form method="POST" action="?/myform">
+		<input name="data" type="text">
+		<button type="submit">send</button>
 	</form>
-</section>
 <div id="zim" />
+
+
+
+
+
+
 
 <style>
 	section {
